@@ -20,11 +20,11 @@ class Player {
   private boolean disable = false;
   private int disableTime;
 
-
   private int angle = 0;
 
-  PVector pos;
-  PVector vel = new PVector(0, 0);
+  private PVector pos;
+  private PVector prevPos = new PVector(0, 0);
+  private PVector vel = new PVector(0, 0);
 
   Player(int x, int y) {
     pos = new PVector(x, y);
@@ -69,6 +69,9 @@ class Player {
   }
 
   void movement() {
+    // Saves position
+    prevPos.set(pos);
+    
     if (left){
       vel.x = -speed;
       kx = -1;
@@ -133,15 +136,20 @@ class Player {
   }
   
   void sendPos() {
+    if (
+      prevPos.x == pos.x
+      &&
+      prevPos.y == pos.y
+    ) return;
+    
     JSONObject json;
     json = new JSONObject();
+    
+    json.setString("key", "position");
     json.setInt("clientid", clientid);
     json.setInt("x", int(pos.x));
     json.setInt("y", int(pos.y));
     
     client.write(json.toString());
-    
-    //network.emit("pos", json);
-    
   }
 }
