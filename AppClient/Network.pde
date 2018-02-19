@@ -15,11 +15,18 @@ class Network {
       return;
     
     String data = client.readString();
+    
+    if (data.indexOf("{") != 0 || data.indexOf("{") == -1) {
+      println("THIS: "+ data);
+      return;
+    }
+    
     JSONObject json = parseJSONObject(data);
     
     switch (json.getString("key")) {
     case "position":
-      updateClientPosition(json);
+      //updateClientPosition(json);
+      break;
     }
   }
   
