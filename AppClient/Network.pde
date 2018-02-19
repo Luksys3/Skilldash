@@ -39,18 +39,20 @@ class Network {
   }
 
   void updatePlayerPosition(JSONObject json) {
-    //if (json.getInt("clientid") == localPlayer.getClientId())
-    //  return;
+    if (json.getInt("clientid") == localPlayer.getClientId())
+      return;
       
     String clientid = str(json.getInt("clientid"));
-    int px = json.getInt("x");
-    int py = json.getInt("y");
+    int px = json.getInt("x") + 1;
+    int py = json.getInt("y") + 1;
     
     Player player = players.get(clientid);
     if (player == null) {
-      
+      player = new Player(px, py);
+      player.setClientid(json.getInt("clientid"));
+      players.put(clientid, player);
     } else {
-      player.pos(px, py);
+      player.setPos(px, py);
     }
     
     println(millis() +": "+ json.getInt("clientid") +" x:"+ json.getInt("x") +" y:"+ json.getInt("y"));

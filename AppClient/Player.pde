@@ -64,11 +64,15 @@ class Player {
   int getY() {
     return int(pos.y);
   }
-  
+
   int getClientId() {
     return clientid;
   }
   
+  void setClientid(int lClientid) {
+    clientid = lClientid;
+  }
+
   void setPos(int nx, int ny) {
     pos.x = nx;
     pos.y = ny;

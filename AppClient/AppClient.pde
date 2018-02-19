@@ -27,6 +27,11 @@ void draw() {
   localPlayer.update();
   network.update();
   Bullet1.update();
+
+  for (Map.Entry pair : players.entrySet()) {
+    Player player = players.get(pair.getKey());
+    player.update();
+  }
 }
 
 void keyPressed() {
