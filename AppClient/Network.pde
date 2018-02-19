@@ -6,11 +6,11 @@ class Network {
   }
   
   void update() {
-    print("Availabel: "+ client.available());
-    //if (client.available() > 0) {
-    //  print("Available\n");
-    //} else {
-    //  print("Unavailable\n");
-    //}
+    if (client.available() > 0) {
+      int data = client.read();
+      print("Available: "+ data +"\n");
+    } else {
+      print("Unavailable\n");
+    }
   }
 }
