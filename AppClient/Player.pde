@@ -21,7 +21,7 @@ class Player {
   private int disableTime;
 
 
-  private int angle = 0;
+  private float angle = 0;
 
   PVector pos;
   PVector vel = new PVector(0, 0);
@@ -39,7 +39,8 @@ class Player {
       }
     }
     
-    if(!disable)
+      rotation();
+      
       movement();
     
     sendPos();
@@ -69,19 +70,22 @@ class Player {
   }
 
   void movement() {
-    if (left){
+    if(disable)
+      return;
+      
+    if (left && pos.x > 0){
       vel.x = -speed;
       kx = -1;
-    }else if (right){
+    }else if (right&& pos.x < width){
       vel.x = speed;
       kx = 1;
     }else
       vel.x = 0;
       
-    if (up){
+    if (up && pos.y > 0){
       vel.y = -speed;
       ky = -1;
-    }else if (down){
+    }else if (down && pos.y < height){
       vel.y = speed;
       ky = 1;
     }else
@@ -142,6 +146,44 @@ class Player {
     client.write(json.toString());
     
     //network.emit("pos", json);
+    
+  }
+  
+  void rotation(){
+    float x = pos.x, y = pos.y;
+    float mx = mouseX, my = mouseY;
+    
+    float maxX, minX, maxY, minY;
+    
+    float h, v, iz;
+    
+    if(x > mx){
+      maxX = x;
+      minX = mx;
+    }else{
+      maxX = mx;
+      minX = x;
+    }
+    
+    if(y > my){
+      maxY = y;
+      minY = my;
+    }else{
+      maxY = my;
+      minY = y;
+    }
+    
+    h = maxX - minX;
+    
+    v = maxY - minY;
+    
+    iz = sqrt(pow(h,2) + pow(v, 2));
+    
+    if(h > v){
+      angle = sin(v / iz);
+    }else{
+      angle = sin(h / iz);
+    }
     
   }
 }
