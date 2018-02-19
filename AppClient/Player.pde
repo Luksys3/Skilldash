@@ -1,4 +1,6 @@
 class Player {
+  private int clientid;
+  
   private int w = 20;
   private int h = 20;
   
@@ -16,11 +18,14 @@ class Player {
 
   Player(int x, int y) {
     pos = new PVector(x, y);
+    
+    clientid = int(random(100000, 999999));
   }
 
   void update() {
     movement();
-
+    
+    sendPos();
     draw();
   }
 
@@ -85,5 +90,15 @@ class Player {
     default:
       return pressed;
     }
+  }
+  
+  void sendPos() {
+    JSONObject json;
+    json = new JSONObject();
+    json.setInt("clientid", clientid);
+    
+    
+    //network.emit("pos", json);
+    
   }
 }
