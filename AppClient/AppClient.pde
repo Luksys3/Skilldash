@@ -8,9 +8,9 @@ void setup() {
   //size(1500, 900);
   size(600, 600);
   
-  frameRate(10);
+  //frameRate(1);
   
-  client = new Client(this, "127.0.0.1", 5204);
+  client = new Client(this, "192.168.1.221", 5204);
   network = new Network(client);
   
   Player1 = new Player(width / 2, height / 2);
