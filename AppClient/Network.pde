@@ -43,8 +43,8 @@ class Network {
       return;
       
     String clientid = str(json.getInt("clientid"));
-    int px = json.getInt("x") + 1;
-    int py = json.getInt("y") + 1;
+    int px = json.getInt("x");
+    int py = json.getInt("y");
     
     Player player = players.get(clientid);
     if (player == null) {
