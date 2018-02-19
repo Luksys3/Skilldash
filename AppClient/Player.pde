@@ -119,15 +119,15 @@ class Player {
     }
   }
   
-  void takeDamage(damage){
-    healh -= damage;
+  void takeDamage(int damage){
+    health -= damage;
     
     if(health <= 0){
-      dickedOn();
+      //dickedOn();
     }
   }
   
-  void disable(time){
+  void disable(int time){
     disable = true;
     disableTime = millis() + time;
   }
