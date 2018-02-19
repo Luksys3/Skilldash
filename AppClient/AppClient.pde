@@ -8,5 +8,15 @@ void setup() {
 }
 
 void draw() {
-  Player1.draw();
+  background(100);
+  
+  Player1.update();
+}
+
+void keyPressed() {
+  Player1.keyPressed();
+}
+
+void keyReleased() {
+  Player1.keyReleased();
 }
