@@ -4,22 +4,12 @@ class Player {
   private int w = 20;
   private int h = 20;
   
-  //Base stats
   private int speed = 10;
-  private int health;
-  private int rageBar;
-  
-  //Movement variables
-  private int kx, ky;
+
   private boolean left   = false;
   private boolean right  = false;
   private boolean up     = false;
   private boolean down   = false;
-  
-  //Stunas
-  private boolean disable = false;
-  private int disableTime;
-
 
   private int angle = 0;
 
@@ -33,14 +23,7 @@ class Player {
   }
 
   void update() {
-    if(disable){
-      if(millis() >= disableTime){
-        disable = true;
-      }
-    }
-    
-    if(!disable)
-      movement();
+    movement();
     
     sendPos();
     draw();
@@ -69,29 +52,19 @@ class Player {
   }
 
   void movement() {
-    if (left){
+    if (left)
       vel.x = -speed;
-      kx = -1;
-    }else if (right){
+    else if (right)
       vel.x = speed;
-      kx = 1;
-    }else
+    else
       vel.x = 0;
       
-    if (up){
+    if (up)
       vel.y = -speed;
-      ky = -1;
-    }else if (down){
+    else if (down)
       vel.y = speed;
-      ky = 1;
-    }else
+    else
       vel.y = 0;
-      
-     if(vel.x != 0 && vel.y != 0){
-       
-       vel.x = sqrt((pow(vel.x, 2) / 2)) * kx;
-       vel.y = sqrt((pow(vel.y, 2) / 2)) * ky;
-     }
 
     pos.add(vel);
   }
@@ -119,19 +92,6 @@ class Player {
     }
   }
   
-  void takeDamage(int damage){
-    health -= damage;
-    
-    if(health <= 0){
-      //dickedOn();
-    }
-  }
-  
-  void disable(int time){
-    disable = true;
-    disableTime = millis() + time;
-  }
-  
   void sendPos() {
     JSONObject json;
     json = new JSONObject();
@@ -139,9 +99,17 @@ class Player {
     json.setInt("x", int(pos.x));
     json.setInt("y", int(pos.y));
     
-    client.write(json.toString());
-    
+    //print(json +"\n");
     //network.emit("pos", json);
+    client.write(json.toString());
     
   }
 }
+
+
+
+
+
+
+
+
