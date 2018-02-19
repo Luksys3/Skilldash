@@ -1,47 +1,37 @@
 class Player {
-  private int clientid;
-  
-  private int w = 20;
-  private int h = 20;
-  
+  protected int clientid;
+
+  protected int w = 20;
+  protected int h = 20;
+
   //Base stats
-  private int speed = 10;
-  private int health;
-  private int rageBar;
-  
-  //Movement variables
-  private int kx, ky;
-  private boolean left   = false;
-  private boolean right  = false;
-  private boolean up     = false;
-  private boolean down   = false;
-  
+  protected int speed = 10;
+  protected int health;
+  protected int rageBar;
+
   //Stunas
-  private boolean disable = false;
-  private int disableTime;
+  protected boolean disable = false;
+  protected int disableTime;
 
-  private int angle = 0;
+  protected int angle = 0;
 
-  private PVector pos;
-  private PVector prevPos = new PVector(0, 0);
-  private PVector vel = new PVector(0, 0);
+  protected PVector pos;
+  protected PVector prevPos = new PVector(0, 0);
+  protected PVector vel = new PVector(0, 0);
 
   Player(int x, int y) {
     pos = new PVector(x, y);
-    
+
     clientid = int(random(100000, 999999));
   }
 
   void update() {
-    if(disable){
-      if(millis() >= disableTime){
+    if (disable) {
+      if (millis() >= disableTime) {
         disable = true;
       }
     }
-    
-    if(!disable)
-      movement();
-    
+
     sendPos();
     draw();
   }
@@ -51,11 +41,11 @@ class Player {
     fill(255);
     strokeWeight(0);
     stroke(0);
-    
+
     pushMatrix();
     translate(pos.x, pos.y);
     rotate(radians(angle));
-    
+
     beginShape();
     vertex(-w, -h);
     vertex(w/2, -h/2);
@@ -65,97 +55,52 @@ class Player {
 
     //rect(-w/2, -h, w, h*2);
     popMatrix();
-
   }
 
-  void movement() {
-    // Saves position
-    prevPos.set(pos);
-    
-    if (left){
-      vel.x = -speed;
-      kx = -1;
-    }else if (right){
-      vel.x = speed;
-      kx = 1;
-    }else
-      vel.x = 0;
-      
-    if (up){
-      vel.y = -speed;
-      ky = -1;
-    }else if (down){
-      vel.y = speed;
-      ky = 1;
-    }else
-      vel.y = 0;
-      
-     if(vel.x != 0 && vel.y != 0){
-       
-       vel.x = sqrt((pow(vel.x, 2) / 2)) * kx;
-       vel.y = sqrt((pow(vel.y, 2) / 2)) * ky;
-     }
-
-    pos.add(vel);
-  }
-
-  void keyPressed() {
-    updateButtons(key, true);
-  }
-
-  void keyReleased() {
-    updateButtons(key, false);
-  }
-
-  boolean updateButtons(char k, boolean pressed) {
-    switch (k) {
-    case 'w':
-      return up = pressed;
-    case 's':
-      return down = pressed;
-    case 'd':
-      return right = pressed;
-    case 'a':
-      return left = pressed;
-    default:
-      return pressed;
-    }
-  }
-  
   int getX() {
     return int(pos.x);
   }
-  int getY(){
-   return int(pos.y); 
+
+  int getY() {
+    return int(pos.y);
   }
-  void takeDamage(int damage){
+  
+  int getClientId() {
+    return clientid;
+  }
+  
+  void setPos(int nx, int ny) {
+    pos.x = nx;
+    pos.y = ny;
+  }
+
+  void takeDamage(int damage) {
     health -= damage;
-    
-    if(health <= 0){
+
+    if (health <= 0) {
       //dickedOn();
     }
   }
-  
-  void disable(int time){
+
+  void disable(int time) {
     disable = true;
     disableTime = millis() + time;
   }
-  
+
   void sendPos() {
     if (
       prevPos.x == pos.x
       &&
       prevPos.y == pos.y
-    ) return;
-    
+      ) return;
+
     JSONObject json;
     json = new JSONObject();
-    
-    json.setString("key", "position");
+
     json.setInt("clientid", clientid);
     json.setInt("x", int(pos.x));
     json.setInt("y", int(pos.y));
-    
-    client.write(json.toString());
+
+    network.emit("position", json);
   }
 }
