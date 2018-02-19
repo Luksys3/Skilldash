@@ -122,6 +122,12 @@ class Player {
     }
   }
   
+  int getX() {
+    return int(pos.x);
+  }
+  int getY(){
+   return int(pos.y); 
+  }
   void takeDamage(int damage){
     health -= damage;
     
