@@ -5,7 +5,9 @@ class Player {
   private int h = 20;
   
   private int speed = 10;
-
+  
+  private int kx, ky;
+  
   private boolean left   = false;
   private boolean right  = false;
   private boolean up     = false;
@@ -52,19 +54,29 @@ class Player {
   }
 
   void movement() {
-    if (left)
+    if (left){
       vel.x = -speed;
-    else if (right)
+      kx = -1;
+    }else if (right){
       vel.x = speed;
-    else
+      kx = 1;
+    }else
       vel.x = 0;
       
-    if (up)
+    if (up){
       vel.y = -speed;
-    else if (down)
+      ky = -1;
+    }else if (down){
       vel.y = speed;
-    else
+      ky = 1;
+    }else
       vel.y = 0;
+      
+     if(vel.x != 0 && vel.y != 0){
+       
+       vel.x = sqrt((pow(vel.x, 2) / 2)) * kx;
+       vel.y = sqrt((pow(vel.y, 2) / 2)) * ky;
+     }
 
     pos.add(vel);
   }
