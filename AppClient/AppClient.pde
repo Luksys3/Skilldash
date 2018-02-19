@@ -3,6 +3,7 @@ import processing.net.*;
 Network network;
 Client client;
 Player Player1;
+Bullet Bullet1;
 
 void setup() {
   //size(1500, 900);
@@ -12,15 +13,16 @@ void setup() {
   
   client = new Client(this, "192.168.1.221", 5204);
   network = new Network(client);
-  
   Player1 = new Player(width / 2, height / 2);
+  Bullet1 = new Bullet(mouseX,mouseY,Player1.getX(),Player1.getY());
+  
 }
 
 void draw() {
   background(100);
-  
   Player1.update();
   network.update();
+  Bullet1.update();
 }
 
 void keyPressed() {

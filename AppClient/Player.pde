@@ -98,4 +98,11 @@ class Player {
       return pressed;
     }
   }
+  
+  int getX() {
+    return int(pos.x);
+  }
+  int getY(){
+   return int(pos.y); 
+  }
 }
