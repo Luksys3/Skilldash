@@ -2,14 +2,22 @@ class Player {
   private int w = 20;
   private int h = 20;
   
+  //Base stats
   private int speed = 10;
+  private int health;
+  private int rageBar;
   
+  //Movement variables
   private int kx, ky;
-  
   private boolean left   = false;
   private boolean right  = false;
   private boolean up     = false;
   private boolean down   = false;
+  
+  //Stunas
+  private boolean disable = false;
+  private int disableTime;
+
 
   private int angle = 0;
 
@@ -21,7 +29,15 @@ class Player {
   }
 
   void update() {
-    movement();
+    
+    if(disable){
+      if(millis() >= disableTime){
+        disable = true;
+      }
+    }
+    
+    if(!disable)
+      movement();
 
     draw();
   }
@@ -98,4 +114,18 @@ class Player {
       return pressed;
     }
   }
+  
+  void takeDamage(damage){
+    healh -= damage;
+    
+    if(health <= 0){
+      dickedOn();
+    }
+  }
+  
+  void disable(time){
+    disable = true;
+    disableTime = millis() + time;
+  }
+  
 }
