@@ -9,14 +9,14 @@ void setup() {
 }
 
 void draw() {
+  // Get next available client
+  Client client = server.available();
   
-  // Get the next available client
-  Client thisClient = server.available();
-  // If the client is not null, and says something, display what it said
-  if (thisClient !=null) {
-    String whatClientSaid = thisClient.readString();
+  if (client !=null) {
+    String whatClientSaid = client.readString();
     if (whatClientSaid != null) {
-      println(thisClient.ip() + "\n" + whatClientSaid);
+      println(millis() +": "+ client.ip());
+      server.write(whatClientSaid);
     } 
   } 
 }

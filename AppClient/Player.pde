@@ -20,11 +20,11 @@ class Player {
   private boolean disable = false;
   private int disableTime;
 
-
   private float angle = 0;
 
-  PVector pos;
-  PVector vel = new PVector(0, 0);
+  private PVector pos;
+  private PVector prevPos = new PVector(0, 0);
+  private PVector vel = new PVector(0, 0);
 
   Player(int x, int y) {
     pos = new PVector(x, y);
@@ -55,7 +55,7 @@ class Player {
     
     pushMatrix();
     translate(pos.x, pos.y);
-    rotate(radians(angle));
+    rotate(angle);
     
     beginShape();
     vertex(-w, -h);
@@ -73,10 +73,13 @@ class Player {
     if(disable)
       return;
       
+    // Saves position
+    prevPos.set(pos);
+    
     if (left && pos.x > 0){
       vel.x = -speed;
       kx = -1;
-    }else if (right&& pos.x < width){
+    }else if (right && pos.x < width){
       vel.x = speed;
       kx = 1;
     }else
@@ -137,25 +140,34 @@ class Player {
   }
   
   void sendPos() {
+    if (
+      prevPos.x == pos.x
+      &&
+      prevPos.y == pos.y
+    ) return;
+    
     JSONObject json;
     json = new JSONObject();
+    
+    json.setString("key", "position");
     json.setInt("clientid", clientid);
     json.setInt("x", int(pos.x));
     json.setInt("y", int(pos.y));
     
     client.write(json.toString());
-    
-    //network.emit("pos", json);
-    
   }
   
   void rotation(){
+    
+    if(disable)
+      return;
+    
     float x = pos.x, y = pos.y;
     float mx = mouseX, my = mouseY;
     
     float maxX, minX, maxY, minY;
     
-    float h, v, iz;
+    float h, v;
     
     if(x > mx){
       maxX = x;
@@ -177,12 +189,14 @@ class Player {
     
     v = maxY - minY;
     
-    iz = sqrt(pow(h,2) + pow(v, 2));
-    
-    if(h > v){
-      angle = sin(v / iz);
-    }else{
-      angle = sin(h / iz);
+    if(mx > x && my < y){
+      angle = PI/2 - atan(v / h);
+    }else if(mx > x && my > y){
+      angle = PI - atan(h/v); 
+    }else if(mx < x && my > y){
+      angle = 3 * PI / 2 - atan(v/h);
+    }else if(mx < x && my < y){
+      angle = 2 * PI - atan(h / v);
     }
     
   }
