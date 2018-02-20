@@ -4,20 +4,14 @@ class Player {
   protected int w = 20;
   protected int h = 20;
 
-  //Base stats
+  // Base stats
   protected int speed = 10;
   protected int health;
   protected int rageBar;
 
-  //Stunas
-  protected boolean disable = false;
-  protected int disableTime;
-
   protected float angle = 0;
 
   protected PVector pos;
-  protected PVector prevPos = new PVector(0, 0);
-  protected PVector vel = new PVector(0, 0);
 
   Player(int x, int y) {
     pos = new PVector(x, y);
@@ -26,18 +20,10 @@ class Player {
   }
 
   void update() {
-    if (disable) {
-      if (millis() >= disableTime) {
-        disable = true;
-      }
-    }
-      
-    sendPos();
     draw();
   }
 
   void draw() {
-
     fill(255);
     strokeWeight(0);
     stroke(0);
@@ -85,74 +71,8 @@ class Player {
     health -= damage;
 
     if (health <= 0) {
+      health = 0;
       //dickedOn();
     }
-  }
-
-  void disable(int time) {
-    disable = true;
-    disableTime = millis() + time;
-  }
-
-  void sendPos() {
-    if (
-      prevPos.x == pos.x
-      &&
-      prevPos.y == pos.y
-      ) return;
-
-    JSONObject json;
-    json = new JSONObject();
-
-    json.setInt("clientid", clientid);
-    json.setInt("x", int(pos.x));
-    json.setInt("y", int(pos.y));
-    json.setInt("angle", int(degrees(angle)));
-
-    network.emit("position", json);
-  }
-  
-  void rotation(){
-    
-    if(disable)
-      return;
-    
-    float x = pos.x, y = pos.y;
-    float mx = mouseX, my = mouseY;
-    
-    float maxX, minX, maxY, minY;
-    
-    float h, v;
-    
-    if(x > mx){
-      maxX = x;
-      minX = mx;
-    }else{
-      maxX = mx;
-      minX = x;
-    }
-    
-    if(y > my){
-      maxY = y;
-      minY = my;
-    }else{
-      maxY = my;
-      minY = y;
-    }
-    
-    h = maxX - minX;
-    
-    v = maxY - minY;
-    
-    if(mx > x && my < y){
-      angle = PI/2 - atan(v / h);
-    }else if(mx > x && my > y){
-      angle = PI - atan(h/v); 
-    }else if(mx < x && my > y){
-      angle = 3 * PI / 2 - atan(v/h);
-    }else if(mx < x && my < y){
-      angle = 2 * PI - atan(h / v);
-    }
-    
   }
 }
