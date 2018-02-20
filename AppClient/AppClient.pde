@@ -14,7 +14,7 @@ void setup() {
 
   //frameRate(1);
 
-  client = new Client(this, "192.168.1.70", 5204);
+  client = new Client(this, "192.168.1.221", 5204);
   network = new Network(client);
 
   localPlayer = new LocalPlayer(width / 2, height / 2);
