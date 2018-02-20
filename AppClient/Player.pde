@@ -31,8 +31,6 @@ class Player {
         disable = true;
       }
     }
-    
-    rotation();
       
     sendPos();
     draw();
@@ -79,6 +77,10 @@ class Player {
     pos.y = ny;
   }
 
+  void setAngle(int degree) {
+    angle = radians(degree);
+  }
+
   void takeDamage(int damage) {
     health -= damage;
 
@@ -105,6 +107,7 @@ class Player {
     json.setInt("clientid", clientid);
     json.setInt("x", int(pos.x));
     json.setInt("y", int(pos.y));
+    json.setInt("angle", int(degrees(angle)));
 
     network.emit("position", json);
   }

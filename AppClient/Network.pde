@@ -55,6 +55,8 @@ class Network {
       player.setPos(px, py);
     }
     
+    player.setAngle(json.getInt("angle"));
+    
     println(millis() +": "+ json.getInt("clientid") +" x:"+ json.getInt("x") +" y:"+ json.getInt("y"));
   }
 
