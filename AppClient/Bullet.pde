@@ -1,43 +1,49 @@
 class Bullet {
 
-  private int x;
-  private int y;
-  private int speed=20;
-  private int px;
-  private int py;
+  private float x;
+  private float y;
+  private float speed=20;
+  private float mx;
+  private float my;
   private boolean death=false;
-  private float distance;
+  private float angle;
 
-  Bullet(int x1, int y1, int px1, int py1) {
+  Bullet(float x1, float y1, float px1, float py1) {
     x=px1;
     y=py1;
-    px=x1;
-    py=y1;
+    mx=x1;
+    my=y1;
+
+    setup();
   }
-  void movement() {
-    int AB = abs(px-x);
-    int BC = abs(py-y);
 
-    if (AB<=0) {
-      die();
-    } else {
-      float angle = atan(BC/AB);
+  void setup() {
 
-      if (x >= px ) {
-        angle -= radians(180);
-      }
+    float h, v;
 
-      distance = dist(px, py, x, y);
-      if ( distance < speed ) {
-        x = px;
-        y = py;
-        return;
-      }
+    h = abs(x - mx);
 
-      x += speed * cos(angle);
-      y += speed * sin(angle);
+    v = abs(y - my);
+
+    if (mx > x && my < y) {
+      angle = HALF_PI - atan(v / h);
+    } else if (mx > x && my > y) {
+      angle = PI - atan(h / v);
+    } else if (mx < x && my > y) {
+      angle = 3 * HALF_PI - atan(v / h);
+    } else if (mx < x && my < y) {
+      angle = TWO_PI - atan(h / v);
     }
+
+    println(angle * 180 / PI);
   }
+
+  void movement() {
+
+    x += speed * cos(angle - PI / 2);
+    y += speed * sin(angle - PI / 2);
+  }
+
   void draw() {
     fill(0);
     noStroke();
@@ -46,6 +52,9 @@ class Bullet {
   void update() {
     if (!death) {
       movement();
+
+      println(angle * 180 / PI);
+
       draw();
     }
   }

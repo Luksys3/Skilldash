@@ -3,14 +3,18 @@ import java.util.Map;
 
 Network network;
 Client client;
+<<<<<<< HEAD
+=======
 Bullet Bullet1;
+Terrain terrain;
+>>>>>>> d52201eb7cdf00e6ba2776dfb4b302995f191da2
 
 LocalPlayer localPlayer;
 HashMap<String, Player> players = new HashMap<String, Player>();
 
 void setup() {
   //size(1500, 900);
-  size(600, 600);
+  size(1300, 650);
 
   //frameRate(1);
 
@@ -18,20 +22,23 @@ void setup() {
   network = new Network(client);
 
   localPlayer = new LocalPlayer(width / 2, height / 2);
+<<<<<<< HEAD
+=======
   Bullet1 = new Bullet(mouseX, mouseY, localPlayer.getX(), localPlayer.getY());
+  terrain = new Terrain();
+>>>>>>> d52201eb7cdf00e6ba2776dfb4b302995f191da2
 }
 
 void draw() {
-  background(100);
-
+  terrain.draw();
   localPlayer.update();
   network.update();
-  Bullet1.update();
 
   for (Map.Entry pair : players.entrySet()) {
     Player player = players.get(pair.getKey());
     player.update();
   }
+  
 }
 
 void keyPressed() {

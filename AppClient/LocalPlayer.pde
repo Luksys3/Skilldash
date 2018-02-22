@@ -27,7 +27,10 @@ class LocalPlayer extends Player {
 
     if (!disable)
       movement();
-
+   
+   //if(bMovement){
+   //  bullet1.update();
+   //}
     rotation();
 
     draw();
@@ -79,29 +82,11 @@ class LocalPlayer extends Player {
     float x = pos.x, y = pos.y;
     float mx = mouseX, my = mouseY;
 
-    float maxX, minX, maxY, minY;
-
     float h, v;
 
-    if (x > mx) {
-      maxX = x;
-      minX = mx;
-    } else {
-      maxX = mx;
-      minX = x;
-    }
+    h = abs(x - mx);
 
-    if (y > my) {
-      maxY = y;
-      minY = my;
-    } else {
-      maxY = my;
-      minY = y;
-    }
-
-    h = maxX - minX;
-
-    v = maxY - minY;
+    v = abs(y - my);
 
     if (mx > x && my < y) {
       angle = HALF_PI - atan(v / h);
@@ -112,6 +97,38 @@ class LocalPlayer extends Player {
     } else if (mx < x && my < y) {
       angle = TWO_PI - atan(h / v);
     }
+  }
+
+  void sendPos() {
+    if (
+      prevPos.x == pos.x
+      &&
+      prevPos.y == pos.y
+      ) return;
+
+    JSONObject json;
+    json = new JSONObject();
+
+    json.setInt("clientid", clientid);
+    json.setInt("x", int(pos.x));
+    json.setInt("y", int(pos.y));
+    json.setInt("angle", int(degrees(angle)));
+
+    network.emit("position", json);
+  }
+  
+  void shoot(){
+    float mx = mouseX, my = mouseY;
+    
+    JSONObject json;
+    json = new JSONObject();
+    
+    json.setFloat("x1", pos.x);
+    json.setFloat("y1", pos.y);
+    json.setFloat("x2", mx);
+    json.setFloat("y2", my);
+    
+    network.emit("bullet", json);
   }
 
   void keyPressed() {
@@ -132,6 +149,9 @@ class LocalPlayer extends Player {
       return right = pressed;
     case 'a':
       return left = pressed;
+    case 'g':
+      shoot();
+      return true;
     default:
       return pressed;
     }
