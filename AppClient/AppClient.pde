@@ -3,11 +3,7 @@ import java.util.Map;
 
 Network network;
 Client client;
-<<<<<<< HEAD
-=======
-Bullet Bullet1;
 Terrain terrain;
->>>>>>> d52201eb7cdf00e6ba2776dfb4b302995f191da2
 
 LocalPlayer localPlayer;
 HashMap<String, Player> players = new HashMap<String, Player>();
@@ -22,11 +18,7 @@ void setup() {
   network = new Network(client);
 
   localPlayer = new LocalPlayer(width / 2, height / 2);
-<<<<<<< HEAD
-=======
-  Bullet1 = new Bullet(mouseX, mouseY, localPlayer.getX(), localPlayer.getY());
   terrain = new Terrain();
->>>>>>> d52201eb7cdf00e6ba2776dfb4b302995f191da2
 }
 
 void draw() {
