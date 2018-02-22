@@ -8,7 +8,7 @@ class Network {
 
   void update() {
     if (!client.active()) {
-      print("DISCONNECTED\n");
+     // print("DISCONNECTED\n");
       return;
     }
 
@@ -57,7 +57,7 @@ class Network {
     
     player.setAngle(json.getInt("angle"));
     
-    println(millis() +": "+ json.getInt("clientid") +" x:"+ json.getInt("x") +" y:"+ json.getInt("y"));
+  //  println(millis() +": "+ json.getInt("clientid") +" x:"+ json.getInt("x") +" y:"+ json.getInt("y"));
   }
 
   void emit(String type, JSONObject json) {

@@ -3,7 +3,6 @@ import java.util.Map;
 
 Network network;
 Client client;
-Bullet Bullet1;
 
 LocalPlayer localPlayer;
 HashMap<String, Player> players = new HashMap<String, Player>();
@@ -18,7 +17,6 @@ void setup() {
   network = new Network(client);
 
   localPlayer = new LocalPlayer(width / 2, height / 2);
-  Bullet1 = new Bullet(mouseX, mouseY, localPlayer.getX(), localPlayer.getY());
 }
 
 void draw() {
@@ -26,7 +24,6 @@ void draw() {
 
   localPlayer.update();
   network.update();
-  Bullet1.update();
 
   for (Map.Entry pair : players.entrySet()) {
     Player player = players.get(pair.getKey());
