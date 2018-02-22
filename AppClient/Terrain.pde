@@ -3,7 +3,7 @@ class Terrain {
     background(48, 167, 30);
     fill(255, 0, 0);
 
-    //Center area/Item spawn area
+    //Center area/OP Item spawn area
 
     rectMode(CENTER);
     rect(width/2, height/2, 200, 100);
@@ -20,5 +20,12 @@ class Terrain {
     fill(0, 0, 0, 20);
     ellipse(300, 600, 300, 100);
     ellipse(1000, 50, 300, 100);
+    
+    //Med area
+    
+    fill(252,18,137);
+    noStroke();
+    ellipse(width/2,40,80,80);
+    ellipse(width/2,610,80,80);
   }
 }
