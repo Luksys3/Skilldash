@@ -4,13 +4,14 @@ import java.util.Map;
 Network network;
 Client client;
 Bullet Bullet1;
+Terrain terrain;
 
 LocalPlayer localPlayer;
 HashMap<String, Player> players = new HashMap<String, Player>();
 
 void setup() {
   //size(1500, 900);
-  size(600, 600);
+  size(1300, 650);
 
   //frameRate(1);
 
@@ -19,11 +20,11 @@ void setup() {
 
   localPlayer = new LocalPlayer(width / 2, height / 2);
   Bullet1 = new Bullet(mouseX, mouseY, localPlayer.getX(), localPlayer.getY());
+  terrain = new Terrain();
 }
 
 void draw() {
-  background(100);
-
+  terrain.draw();
   localPlayer.update();
   network.update();
   Bullet1.update();
@@ -32,6 +33,7 @@ void draw() {
     Player player = players.get(pair.getKey());
     player.update();
   }
+  
 }
 
 void keyPressed() {
