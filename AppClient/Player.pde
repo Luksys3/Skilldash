@@ -54,6 +54,10 @@ class Player {
     return clientid;
   }
   
+  float getAngle() {
+    return angle;
+  }
+  
   void setClientid(int lClientid) {
     clientid = lClientid;
   }
@@ -63,7 +67,7 @@ class Player {
     pos.y = ny;
   }
 
-  void setAngle(int degree) {
+  void setAngle(float degree) {
     angle = radians(degree);
   }
 

@@ -30,7 +30,6 @@ class LocalPlayer extends Player {
 
     rotation();
 
-    sendPos();
     draw();
   }
 
@@ -113,24 +112,6 @@ class LocalPlayer extends Player {
     } else if (mx < x && my < y) {
       angle = TWO_PI - atan(h / v);
     }
-  }
-
-  void sendPos() {
-    if (
-      prevPos.x == pos.x
-      &&
-      prevPos.y == pos.y
-      ) return;
-
-    JSONObject json;
-    json = new JSONObject();
-
-    json.setInt("clientid", clientid);
-    json.setInt("x", int(pos.x));
-    json.setInt("y", int(pos.y));
-    json.setInt("angle", int(degrees(angle)));
-
-    network.emit("position", json);
   }
 
   void keyPressed() {
