@@ -10,7 +10,6 @@ GustBum gustBum;
 HashMap<String, Player> players = new HashMap<String, Player>();
 
 void setup() {
-  //size(1500, 900);
   size(1300, 650);
 
   //frameRate(1);
