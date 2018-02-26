@@ -5,7 +5,8 @@ Network network;
 Client client;
 Terrain terrain;
 
-LocalPlayer localPlayer;
+//LocalPlayer localPlayer;
+GustBum gustBum;
 HashMap<String, Player> players = new HashMap<String, Player>();
 
 void setup() {
@@ -17,13 +18,15 @@ void setup() {
   client = new Client(this, "192.168.1.221", 5204);
   network = new Network(client);
 
-  localPlayer = new LocalPlayer(width / 2, height / 2);
+  //localPlayer = new LocalPlayer(width / 2, height / 2);
+  gustBum = new GustBum(width / 2, height / 2);
   terrain = new Terrain();
 }
 
 void draw() {
   terrain.draw();
-  localPlayer.update();
+  //localPlayer.update();
+  gustBum.update();
   network.update();
 
   for (Map.Entry pair : players.entrySet()) {
@@ -34,9 +37,11 @@ void draw() {
 }
 
 void keyPressed() {
-  localPlayer.keyPressed();
+  //localPlayer.keyPressed();
+  gustBum.keyPressed();
 }
 
 void keyReleased() {
-  localPlayer.keyReleased();
+  //localPlayer.keyReleased();
+  gustBum.keyReleased();
 }
