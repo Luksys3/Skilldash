@@ -129,6 +129,7 @@ class LocalPlayer extends Player {
     json.setFloat("y2", my);
     
     network.emit("bullet", json);
+    println("Bullet sent");
   }
 
   void keyPressed() {

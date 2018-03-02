@@ -1,6 +1,8 @@
 import processing.net.*;
 import java.util.Map;
 
+Display display = new Display();
+
 Server server;
 int val = 0;
 
@@ -14,12 +16,22 @@ HashMap<String, String> players = new HashMap<String, String>();
 HashMap<String, String> playerClientid = new HashMap<String, String>();
 
 void setup() {
-  size(200, 200);
+  size(200, 140);
   frameRate(5);
-  server = new Server(this, 5204, "192.168.1.221");
+  server = new Server(this, 5204, "192.168.0.109");
 }
 
 void draw() {
+  background(150);
+  display.refresh();
+  display.show("Online: "+ players.size());
+  display.show("Connected: ");
+  for (Map.Entry pair : players.entrySet()) {
+    display.show("    "+ pair.getKey());
+  }
+  
+  
+  
   // Get next available client
   Client client = server.available();
 
@@ -33,10 +45,11 @@ void draw() {
         players.put( str(json.getInt("clientid")), data );
         playerClientid.put( client.ip(), str(json.getInt("clientid")) );
 
-        println(millis() +" - Data received");
+        //println(millis() +" - Data received");
         break;
       case "bullet":
         println("Bullet received");
+        server.write(data);
         break;
       }
     }
@@ -53,7 +66,7 @@ void draw() {
 
     if (dataToSend != "") {
       server.write(dataToSend);
-      println(millis() +" - Data sent");
+      //println(millis() +" - Data sent");
     }
   }
 }

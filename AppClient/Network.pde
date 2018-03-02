@@ -49,6 +49,9 @@ class Network {
       case "position":
         updatePlayerPosition(json);
         break;
+      case "bullet":
+        
+        break;
       case "disconnect":
         players.remove( str(json.getInt("clientid")) );
         break;
@@ -67,7 +70,7 @@ class Network {
 
     network.emit("position", json);
     
-    println(millis() +" - Data sent");
+    //println(millis() +" - Data sent");
   }
 
   void updatePlayerPosition(JSONObject json) {
