@@ -1,4 +1,8 @@
 class GustBum extends Player {
+  ProjectileStar projectileStar;
+  
+  private boolean star = false;
+  
   //Movement variables
   private int kx, ky;
   private boolean left   = false;
@@ -14,7 +18,7 @@ class GustBum extends Player {
   private PVector prevPos = new PVector(0, 0);
   private PVector vel = new PVector(0, 0);
 
-  GustasBum(int x, int y) {
+  GustBum(int x, int y) {
     super(x, y);
   }
 
@@ -23,6 +27,9 @@ class GustBum extends Player {
       if (millis() >= disableTime) {
         disable = true;
       }
+    }
+    if(star){
+      projectileStar.update();
     }
 
     if (!disable)
@@ -138,6 +145,13 @@ class GustBum extends Player {
   void keyReleased() {
     updateButtons(key, false);
   }
+  
+  void star(){
+  
+    projectileStar = new ProjectileStar(pos.x, pos.y, mouseX, mouseY);
+    star = true;
+    
+  }
 
   boolean updateButtons(char k, boolean pressed) {
     switch (k) {
@@ -150,7 +164,8 @@ class GustBum extends Player {
     case 'a':
       return left = pressed;
     case 'g':
-      shoot();
+      //shoot();
+       star();
       return true;
     default:
       return pressed;

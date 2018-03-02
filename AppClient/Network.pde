@@ -60,18 +60,23 @@ class Network {
     JSONObject json;
     json = new JSONObject();
 
-    json.setInt("clientid", localPlayer.getClientId());
-    json.setInt("x", localPlayer.getX());
-    json.setInt("y", localPlayer.getY());
-    json.setFloat("angle", localPlayer.getAngle());
+    //json.setInt("clientid", localPlayer.getClientId());
+    //json.setInt("x", localPlayer.getX());
+    //json.setInt("y", localPlayer.getY());
+    //json.setFloat("angle", localPlayer.getAngle());
+    
+    json.setInt("clientid", gustBum.getClientId());
+    json.setInt("x", gustBum.getX());
+    json.setInt("y", gustBum.getY());
+    json.setFloat("angle", gustBum.getAngle());
 
     network.emit("position", json);
     
-    println(millis() +" - Data sent");
+   // println(millis() +" - Data sent");
   }
 
   void updatePlayerPosition(JSONObject json) {
-    if (json.getInt("clientid") == localPlayer.getClientId())
+    if (json.getInt("clientid") == gustBum.getClientId())
       return;
 
     String clientid = str(json.getInt("clientid"));

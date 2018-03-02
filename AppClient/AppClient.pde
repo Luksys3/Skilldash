@@ -14,7 +14,7 @@ void setup() {
 
   //frameRate(1);
 
-  client = new Client(this, "192.168.1.221", 5204);
+  client = new Client(this, "192.168.0.109", 5204);
   network = new Network(client);
 
   //localPlayer = new LocalPlayer(width / 2, height / 2);
@@ -23,8 +23,9 @@ void setup() {
 }
 
 void draw() {
-  terrain.draw();
+  //terrain.draw();
   //localPlayer.update();
+  background(100);
   gustBum.update();
   network.update();
 

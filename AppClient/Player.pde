@@ -24,7 +24,7 @@ class Player {
   }
 
   void draw() {
-    fill(255);
+    fill(55);
     strokeWeight(0);
     stroke(0);
 
