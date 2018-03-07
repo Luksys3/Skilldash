@@ -16,7 +16,7 @@ class Player {
   Player(int x, int y) {
     pos = new PVector(x, y);
 
-    clientid = int(random(100000, 999999));
+    clientid = randomId();
   }
 
   void update() {
@@ -24,7 +24,7 @@ class Player {
   }
 
   void draw() {
-    fill(255);
+    fill(55);
     strokeWeight(0);
     stroke(0);
 

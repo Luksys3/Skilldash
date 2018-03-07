@@ -18,7 +18,7 @@ HashMap<String, String> playerClientid = new HashMap<String, String>();
 void setup() {
   size(200, 140);
   frameRate(5);
-  server = new Server(this, 5204, "192.168.0.109");
+  server = new Server(this, 5204, "128.0.0.1");
 }
 
 void draw() {

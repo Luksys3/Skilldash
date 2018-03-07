@@ -1,12 +1,14 @@
-class LocalPlayer extends Player {
+class GustBum extends Player {
+  ProjectileStar projectileStar;
+  
+  private boolean star = false;
+  
   //Movement variables
   private int kx, ky;
   private boolean left   = false;
   private boolean right  = false;
   private boolean up     = false;
   private boolean down   = false;
-  
-  private boolean keyDownG = false;
 
   //Stunas
   private boolean disable = false;
@@ -16,7 +18,7 @@ class LocalPlayer extends Player {
   private PVector prevPos = new PVector(0, 0);
   private PVector vel = new PVector(0, 0);
 
-  LocalPlayer(int x, int y) {
+  GustBum(int x, int y) {
     super(x, y);
   }
 
@@ -25,6 +27,9 @@ class LocalPlayer extends Player {
       if (millis() >= disableTime) {
         disable = true;
       }
+    }
+    if(star){
+      projectileStar.update();
     }
 
     if (!disable)
@@ -131,27 +136,21 @@ class LocalPlayer extends Player {
     json.setFloat("y2", my);
     
     network.emit("bullet", json);
-    println("Bullet sent");
   }
 
   void keyPressed() {
     updateButtons(key, true);
-    
-    if (key == 'g')
-      keyDownG = true;
   }
 
   void keyReleased() {
     updateButtons(key, false);
+  }
+  
+  void star(){
+  
+    projectileStar = new ProjectileStar(pos.x, pos.y, mouseX, mouseY);
+    star = true;
     
-    if (
-      keyDownG
-      ||
-      key == 'g'
-    ) {
-      keyDownG = false;
-      shoot();
-    }
   }
 
   boolean updateButtons(char k, boolean pressed) {
@@ -164,6 +163,10 @@ class LocalPlayer extends Player {
       return right = pressed;
     case 'a':
       return left = pressed;
+    case 'g':
+      //shoot();
+       star();
+      return true;
     default:
       return pressed;
     }

@@ -4,3 +4,7 @@ boolean isJSONValid(String str, String ends) {
     
   return true;
 }
+
+int randomId() {
+  return int(random(100000, 999999)); 
+}

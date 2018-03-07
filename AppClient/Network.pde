@@ -50,7 +50,7 @@ class Network {
         updatePlayerPosition(json);
         break;
       case "bullet":
-        
+        projectileManager.create(json);
         break;
       case "disconnect":
         players.remove( str(json.getInt("clientid")) );
@@ -67,6 +67,11 @@ class Network {
     json.setInt("x", localPlayer.getX());
     json.setInt("y", localPlayer.getY());
     json.setFloat("angle", localPlayer.getAngle());
+    
+    //json.setInt("clientid", gustBum.getClientId());
+    //json.setInt("x", gustBum.getX());
+    //json.setInt("y", gustBum.getY());
+    //json.setFloat("angle", gustBum.getAngle());
 
     network.emit("position", json);
     
