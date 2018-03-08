@@ -6,7 +6,7 @@ class LocalPlayer extends Player {
   private boolean up     = false;
   private boolean down   = false;
   
-  private boolean keyDownG = false;
+  private boolean keyUpG = true;
 
   //Stunas
   private boolean disable = false;
@@ -29,10 +29,7 @@ class LocalPlayer extends Player {
 
     if (!disable)
       movement();
-   
-   //if(bMovement){
-   //  bullet1.update();
-   //}
+    
     rotation();
 
     draw();
@@ -137,20 +134,21 @@ class LocalPlayer extends Player {
   void keyPressed() {
     updateButtons(key, true);
     
-    if (key == 'g')
-      keyDownG = true;
+    if (
+      keyUpG == true
+      &&
+      key == 'g'
+    ) {
+      keyUpG = false;
+      shoot();
+    }
   }
 
   void keyReleased() {
     updateButtons(key, false);
     
-    if (
-      keyDownG
-      ||
-      key == 'g'
-    ) {
-      keyDownG = false;
-      shoot();
+    if (key == 'g') {
+      keyUpG = true;
     }
   }
 
