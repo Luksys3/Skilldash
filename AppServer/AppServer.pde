@@ -7,7 +7,7 @@ Server server;
 int val = 0;
 
 final String splitter = "#|#";
-final int interval = 200; // ms
+final int interval = 100; // ms
 
 
 int lastSent = millis() - interval;
@@ -17,8 +17,8 @@ HashMap<String, String> playerClientid = new HashMap<String, String>();
 
 void setup() {
   size(200, 140);
-  frameRate(5);
-  server = new Server(this, 5204, "128.0.0.1");
+  //frameRate(5);
+  server = new Server(this, 5204, "192.168.43.197");
 }
 
 void draw() {

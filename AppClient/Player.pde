@@ -67,8 +67,8 @@ class Player {
     pos.y = ny;
   }
 
-  void setAngle(float degree) {
-    angle = radians(degree);
+  void setAngle(float rad) {
+    angle = rad;
   }
 
   void takeDamage(int damage) {
