@@ -1,9 +1,8 @@
 class Network {
   private Client client;
   private String splitter = "#|#";
-  
-  private int interval = 200;
-  private int lastSent = millis() - interval;
+
+  private int lastSent = millis() - requestInterval;
 
   Network(Client cl) {
     client = cl;
@@ -11,23 +10,23 @@ class Network {
 
   void update() {
     if (!client.active()) {
-     // print("DISCONNECTED\n");
+      // print("DISCONNECTED\n");
       return;
     }
-    
+
     int cMillis = millis();
-    if (cMillis - lastSent >= interval) {
+    if (cMillis - lastSent >= requestInterval) {
       lastSent = cMillis;
       sendData();
     }
-    
+
     checkForNewData();
   }
-  
+
   void checkForNewData() {
     if (client.available() <= 0)
       return;
-      
+
     String data = client.readString();
 
     String[] array = split(data, splitter);
@@ -43,7 +42,7 @@ class Network {
       JSONObject json = parseJSONObject(str);
       if (json == null)
         return;
-        
+
 
       switch (json.getString("type")) {
       case "position":
@@ -58,7 +57,7 @@ class Network {
       }
     }
   }
-  
+
   void sendData() {
     JSONObject json;
     json = new JSONObject();
@@ -67,14 +66,14 @@ class Network {
     json.setInt("x", localPlayer.getX());
     json.setInt("y", localPlayer.getY());
     json.setFloat("angle", localPlayer.getAngle());
-    
+
     //json.setInt("clientid", gustBum.getClientId());
     //json.setInt("x", gustBum.getX());
     //json.setInt("y", gustBum.getY());
     //json.setFloat("angle", gustBum.getAngle());
 
     network.emit("position", json);
-    
+
     //println(millis() +" - Data sent");
   }
 
@@ -92,9 +91,9 @@ class Network {
       player.setClientid(json.getInt("clientid"));
       players.put(clientid, player);
     } else {
-      player.setPos(px, py);
+      player.moveTo(px, py);
     }
-    
+
     player.setAngle(json.getFloat("angle"));
   }
 

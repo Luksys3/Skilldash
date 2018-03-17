@@ -8,6 +8,10 @@ class Player {
   protected int speed = 10;
   protected int health;
   protected int rageBar;
+  
+  // Transaction variables
+  private PVector movementTick = new PVector(0, 0);
+  private PVector moveToCoords;
 
   protected float angle = 0;
 
@@ -15,11 +19,14 @@ class Player {
 
   Player(int x, int y) {
     pos = new PVector(x, y);
+    moveToCoords = new PVector(x, y);
 
     clientid = randomId();
   }
 
   void update() {
+    doMoveAnimation();
+    
     draw();
   }
 
@@ -66,6 +73,13 @@ class Player {
     pos.x = nx;
     pos.y = ny;
   }
+  
+  void addPos(int nx, int ny) {
+    setPos(
+      (int)pos.x + nx,
+      (int)pos.y + ny
+    );
+  }
 
   void setAngle(float rad) {
     angle = rad;
@@ -78,5 +92,55 @@ class Player {
       health = 0;
       //dickedOn();
     }
+  }
+  
+  private void moveTo(int nx, int ny) {
+    moveToCoords.x = nx;
+    moveToCoords.y = ny;
+    
+    float xDist = abs(pos.x - nx);
+    float yDist = abs(pos.y - ny);
+    
+    // TODO: kad automatiskai aspauciuotu intervala tarp
+    //       requestu kiekvieno playerio ir skaicuotu movement tickus pagal ji
+    float div = frameRate / (1000 / requestInterval);
+    
+    float xTick = xDist / div;
+    float yTick = yDist / div;
+    
+    if (nx < pos.x)
+      xTick = -xTick;
+      
+    if (ny < pos.y)
+      yTick = -yTick;
+    
+    movementTick.x = xTick;
+    movementTick.y = yTick;
+    
+    println(xTick);
+  }
+  
+  private void doMoveAnimation() {
+    if (1 > abs(pos.x - moveToCoords.x)) {
+      movementTick.x = 0;
+      //pos.x = moveToCoords.x;
+    }
+      
+    if (1 > abs(pos.y - moveToCoords.y)) {
+      movementTick.y = 0;
+      //pos.y = moveToCoords.y;
+    }
+    
+    if (
+      1 > abs(pos.x - moveToCoords.x)
+      &&
+      1 > abs(pos.y - moveToCoords.y)
+    ) return;
+    
+    pos = PVector.add(pos, movementTick);
+    //addPos(
+    //  (int)movementTick.x,
+    //  (int)movementTick.y
+    //);
   }
 }

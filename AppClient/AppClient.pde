@@ -2,6 +2,8 @@ import processing.net.*;
 import java.util.Map;
 import java.util.Iterator;
 
+int requestInterval = 40;
+
 Network network;
 Client client;
 Terrain terrain;
@@ -17,7 +19,7 @@ HashMap<String, ProjectileStar> projectilesStar = new HashMap<String, Projectile
 void setup() {
   size(600, 650);
 
-  client = new Client(this, "192.168.43.197", 5204);
+  client = new Client(this, "localhost", 5204);
   network = new Network(client);
 
   localPlayer = new LocalPlayer(width / 2, height / 2);

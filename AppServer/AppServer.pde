@@ -18,7 +18,7 @@ HashMap<String, String> playerClientid = new HashMap<String, String>();
 void setup() {
   size(200, 140);
   //frameRate(5);
-  server = new Server(this, 5204, "192.168.43.197");
+  server = new Server(this, 5204, "localhost");
 }
 
 void draw() {
@@ -29,9 +29,9 @@ void draw() {
   for (Map.Entry pair : players.entrySet()) {
     display.show("    "+ pair.getKey());
   }
-  
-  
-  
+
+
+
   // Get next available client
   Client client = server.available();
 
@@ -55,26 +55,26 @@ void draw() {
     }
   }
 
-  int cMillis = millis();
-  if (cMillis - lastSent >= interval) {
-    lastSent = cMillis;
+  //int cMillis = millis();
+  //if (cMillis - lastSent >= interval) {
+  //lastSent = cMillis;
 
-    String dataToSend = "";
-    for (Map.Entry pair : players.entrySet()) {
-      dataToSend += pair.getValue();
-    }
-
-    if (dataToSend != "") {
-      server.write(dataToSend);
-      //println(millis() +" - Data sent");
-    }
+  String dataToSend = "";
+  for (Map.Entry pair : players.entrySet()) {
+    dataToSend += pair.getValue();
   }
+
+  if (dataToSend != "") {
+    server.write(dataToSend);
+    //println(millis() +" - Data sent");
+  }
+  //}
 }
 
 void disconnectEvent(Client client) {
-  String clientid = getClientid(client.ip());
-  removePlayer(clientid);
-  
-  server.write("{\"clientid\": "+ clientid +", \"type\": \"disconnect\"}");
-  print(millis() + " - Player disconnected: "+ client.ip());
+  //String clientid = getClientid(client.ip());
+  //removePlayer(clientid);
+
+  //server.write("{\"clientid\": "+ clientid +", \"type\": \"disconnect\"}");
+  //print(millis() + " - Player disconnected: "+ client.ip());
 }
