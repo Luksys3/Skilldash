@@ -1,5 +1,5 @@
 class Scenes {
-  private String defaultScene = "game";
+  private String defaultScene = "title";
   private String scene = defaultScene;
   private HashMap<String, Scene> scenes = new HashMap<String, Scene>();
   
