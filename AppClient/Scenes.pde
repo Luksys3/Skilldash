@@ -19,6 +19,7 @@ class Scenes {
       scenes.get(scene).update();
     }
       
+    textSize(12);
     text("Scene: "+ scene, 10, 20);
   }
   

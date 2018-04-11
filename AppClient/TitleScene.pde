@@ -12,7 +12,7 @@ class TitleScene extends Scene {
   }
   
   void draw() {
-    menuItemYPos = 100;
+    menuItemYPos = 170;
     drawMenuItem("Join game");
     drawMenuItem("Quit");
     
@@ -45,6 +45,7 @@ class TitleScene extends Scene {
       width / 2,
       menuItemYPos + heightPx / 2 - 3
     );
+    textAlign(LEFT, BOTTOM);
     
     menuItemYPos += space + heightPx;
   }
