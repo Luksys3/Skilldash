@@ -67,14 +67,7 @@ class Network {
     json.setInt("y", localPlayer.getY());
     json.setFloat("angle", localPlayer.getAngle());
 
-    //json.setInt("clientid", gustBum.getClientId());
-    //json.setInt("x", gustBum.getX());
-    //json.setInt("y", gustBum.getY());
-    //json.setFloat("angle", gustBum.getAngle());
-
     network.emit("position", json);
-
-    //println(millis() +" - Data sent");
   }
 
   void updatePlayerPosition(JSONObject json) {

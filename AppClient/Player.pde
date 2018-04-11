@@ -9,7 +9,7 @@ class Player {
   protected int health;
   protected int rageBar;
   
-  // Transaction variables
+  // Movement animation variables
   private PVector movementTick = new PVector(0, 0);
   private PVector moveToCoords;
 
@@ -101,8 +101,6 @@ class Player {
     float xDist = abs(pos.x - nx);
     float yDist = abs(pos.y - ny);
     
-    // TODO: kad automatiskai aspauciuotu intervala tarp
-    //       requestu kiekvieno playerio ir skaicuotu movement tickus pagal ji
     float div = frameRate / (1000 / requestInterval);
     
     float xTick = xDist / div;
@@ -116,8 +114,6 @@ class Player {
     
     movementTick.x = xTick;
     movementTick.y = yTick;
-    
-    println(xTick);
   }
   
   private void doMoveAnimation() {
@@ -138,9 +134,5 @@ class Player {
     ) return;
     
     pos = PVector.add(pos, movementTick);
-    //addPos(
-    //  (int)movementTick.x,
-    //  (int)movementTick.y
-    //);
   }
 }

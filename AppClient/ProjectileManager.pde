@@ -38,7 +38,7 @@ class ProjectileManager {
       json.getInt("y1"), 
       json.getInt("x2"), 
       json.getInt("y2")
-      );
+    );
 
     bullets.put(bl.getId(), bl);
     //println("New projectile: "+ json.toString());

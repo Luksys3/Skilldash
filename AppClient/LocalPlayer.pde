@@ -1,19 +1,13 @@
 class LocalPlayer extends Player {
-  //Movement variables
+  // Movement variables
   private int kx, ky;
-  private boolean left   = false;
-  private boolean right  = false;
-  private boolean up     = false;
-  private boolean down   = false;
-  
-  private boolean keyUpG = true;
 
-  //Stunas
-  private boolean disable = false;
+  // Stunas
+  private boolean disabled = false;
   private int disableTime;
 
   // Movement
-  private PVector prevPos = new PVector(0, 0);
+  //private PVector prevPos = new PVector(0, 0);
   private PVector vel = new PVector(0, 0);
 
   LocalPlayer(int x, int y) {
@@ -21,40 +15,40 @@ class LocalPlayer extends Player {
   }
 
   void update() {
-    if (disable) {
-      if (millis() >= disableTime) {
-        disable = true;
-      }
+    if (
+      isDisabled()
+      &&
+      millis() >= disableTime
+    ) unDisable();
+
+    if (isDisabled()) {
+      draw();
+      return;
     }
-
-    if (!disable)
-      movement();
     
+    movement();
     rotation();
-
+    
+    if (Key.isPressed('g'))
+      shoot();
+    
     draw();
   }
 
   void movement() {
-    if (disable)
-      return;
-
-    // Saves position
-    prevPos.set(pos);
-
-    if (left && pos.x > 0) {
+    if (Key.isDown('a') && pos.x > 0) {
       vel.x = -speed;
       kx = -1;
-    } else if (right && pos.x < width) {
+    } else if (Key.isDown('d') && pos.x < width) {
       vel.x = speed;
       kx = 1;
     } else
       vel.x = 0;
 
-    if (up && pos.y > 0) {
+    if (Key.isDown('w') && pos.y > 0) {
       vel.y = -speed;
       ky = -1;
-    } else if (down && pos.y < height) {
+    } else if (Key.isDown('s') && pos.y < height) {
       vel.y = speed;
       ky = 1;
     } else
@@ -70,14 +64,19 @@ class LocalPlayer extends Player {
   }
 
   void disable(int time) {
-    disable = true;
+    disabled = true;
     disableTime = millis() + time;
+  }
+  
+  void unDisable() {
+    disabled = false;
+  }
+  
+  boolean isDisabled() {
+    return disabled;
   }
 
   void rotation() {
-    if (disable)
-      return;
-
     float x = pos.x, y = pos.y;
     float mx = mouseX, my = mouseY;
 
@@ -99,12 +98,6 @@ class LocalPlayer extends Player {
   }
 
   void sendPos() {
-    if (
-      prevPos.x == pos.x
-      &&
-      prevPos.y == pos.y
-      ) return;
-
     JSONObject json;
     json = new JSONObject();
 
@@ -116,8 +109,9 @@ class LocalPlayer extends Player {
     network.emit("position", json);
   }
   
-  void shoot(){
-    float mx = mouseX, my = mouseY;
+  void shoot() {
+    float mx = mouseX,
+          my = mouseY;
     
     JSONObject json;
     json = new JSONObject();
@@ -128,42 +122,41 @@ class LocalPlayer extends Player {
     json.setFloat("y2", my);
     
     network.emit("bullet", json);
-    println("Bullet sent");
   }
 
-  void keyPressed() {
-    updateButtons(key, true);
+  //void keyPressed() {
+  //  //updateButtons(key, true);
     
-    if (
-      keyUpG == true
-      &&
-      key == 'g'
-    ) {
-      keyUpG = false;
-      shoot();
-    }
-  }
+  //  if (
+  //    keyUpG == true
+  //    &&
+  //    key == 'g'
+  //  ) {
+  //    keyUpG = false;
+  //    //shoot();
+  //  }
+  //}
 
-  void keyReleased() {
-    updateButtons(key, false);
+  //void keyReleased() {
+  //  //updateButtons(key, false);
     
-    if (key == 'g') {
-      keyUpG = true;
-    }
-  }
+  //  if (key == 'g') {
+  //    keyUpG = true;
+  //  }
+  //}
 
-  boolean updateButtons(char k, boolean pressed) {
-    switch (k) {
-    case 'w':
-      return up = pressed;
-    case 's':
-      return down = pressed;
-    case 'd':
-      return right = pressed;
-    case 'a':
-      return left = pressed;
-    default:
-      return pressed;
-    }
-  }
+  //boolean updateButtons(char k, boolean pressed) {
+  //  switch (k) {
+  //  case 'w':
+  //    return up = pressed;
+  //  case 's':
+  //    return down = pressed;
+  //  case 'd':
+  //    return right = pressed;
+  //  case 'a':
+  //    return left = pressed;
+  //  default:
+  //    return pressed;
+  //  }
+  //}
 }

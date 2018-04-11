@@ -4,13 +4,13 @@ import java.util.Iterator;
 
 int requestInterval = 40;
 
+Scenes scenes = new Scenes();
 Network network;
 Client client;
 Terrain terrain;
 ProjectileManager projectileManager;
 
 LocalPlayer localPlayer;
-//GustBum gustBum;
 HashMap<String, Player> players = new HashMap<String, Player>();
 
 // - Projectiles init
@@ -18,12 +18,13 @@ HashMap<String, ProjectileStar> projectilesStar = new HashMap<String, Projectile
 
 void setup() {
   size(600, 650);
+  
+  //frameRate(1);
 
   client = new Client(this, "localhost", 5204);
   network = new Network(client);
 
   localPlayer = new LocalPlayer(width / 2, height / 2);
-  //gustBum = new GustBum(width / 2, height / 2);
   terrain = new Terrain();
   projectileManager = new ProjectileManager();
 }
@@ -31,25 +32,17 @@ void setup() {
 void draw() {
   //terrain.draw();
   background(150);
-  localPlayer.update();
-  //gustBum.update();
-  network.update();
   
-  // Updates all projectiles
-  projectileManager.update();
-
-  for (Map.Entry pair : players.entrySet()) {
-    Player player = players.get(pair.getKey());
-    player.update();
-  }
+  scenes.update();
+  
+  // Always at bottom
+  Key.update();
 }
 
 void keyPressed() {
-  localPlayer.keyPressed();
-  //gustBum.keyPressed();
+  Key.press(key);
 }
 
 void keyReleased() {
-  localPlayer.keyReleased();
-  //gustBum.keyReleased();
+  Key.release(key);
 }
