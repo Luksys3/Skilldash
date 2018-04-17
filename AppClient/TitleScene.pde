@@ -3,22 +3,16 @@ class TitleScene extends Scene {
   
   void update() {
     //println("TitleScene");
-    
-    draw();
+    menuItemYPos = 170;
+    createMenuItem("Join game", "game");
+    createMenuItem("Quit", "exit");
   }
   
   void unmount() {
     println("Title scene unmounted");
   }
   
-  void draw() {
-    menuItemYPos = 170;
-    drawMenuItem("Join game");
-    drawMenuItem("Quit");
-    
-  }
-  
-  void drawMenuItem(String title) {
+  void createMenuItem(String title, String scene) {
     int widthPx = 200;
     int heightPx = 50;
     int borderWidth = 3;
@@ -46,6 +40,10 @@ class TitleScene extends Scene {
       menuItemYPos + heightPx / 2 - 3
     );
     textAlign(LEFT, BOTTOM);
+    strokeWeight(0);
+    
+    if (mouseEvent.downIn(xPos, menuItemYPos, xPos + widthPx, menuItemYPos + heightPx))
+      scenes.change(scene);
     
     menuItemYPos += space + heightPx;
   }

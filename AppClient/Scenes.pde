@@ -7,6 +7,7 @@ class Scenes {
     // Add scenes
     scenes.put("title", new TitleScene());
     scenes.put("game", new GameScene());
+    scenes.put("exit", new ExitScene());
   }
   
   boolean is(String name) {

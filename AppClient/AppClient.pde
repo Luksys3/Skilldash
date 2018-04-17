@@ -10,6 +10,8 @@ Client client;
 Terrain terrain;
 ProjectileManager projectileManager;
 
+MouseEvent mouseEvent = new MouseEvent();
+
 LocalPlayer localPlayer;
 HashMap<String, Player> players = new HashMap<String, Player>();
 
@@ -17,7 +19,7 @@ HashMap<String, Player> players = new HashMap<String, Player>();
 HashMap<String, ProjectileStar> projectilesStar = new HashMap<String, ProjectileStar>();
 
 void setup() {
-  size(600, 650);
+  size(600, 560);
   
   //frameRate(1);
 
