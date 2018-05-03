@@ -28,14 +28,9 @@ AppClient appClient = this;
 
 void setup() {
   size(600, 560);
-  
-  debug.show("scene-changer");
-  
-  //frameRate(1);
 }
 
 void draw() {
-  //terrain.draw();
   background(150);
   
   scenes.update();

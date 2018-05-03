@@ -19,17 +19,6 @@ class ProjectileManager {
 
       bl.update();
     }
-
-    //for (Map.Entry pair : bullets.entrySet()) {
-    //  Bullet bl = bullets.get(pair.getKey());
-
-    //  if (bl.isDead()) {
-    //    bullets.remove(bl.getId());
-    //    continue;
-    //  }
-
-    //  bl.update();
-    //}
   }
 
   void create(JSONObject json) {
@@ -41,6 +30,5 @@ class ProjectileManager {
     );
 
     bullets.put(bl.getId(), bl);
-    //println("New projectile: "+ json.toString());
   }
 }

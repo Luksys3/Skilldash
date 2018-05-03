@@ -1,6 +1,10 @@
 class Debug {
   private StringList displayedElements = new StringList();
   
+  Debug() {
+    show("scene-changer");
+  }
+  
   void show(String elKey) {
     displayedElements.append(elKey);
   }
@@ -39,6 +43,6 @@ class Debug {
   }
   
   void pr(String message) {
-    println("Debug: "+ message);
+    println("&Debug: "+ message);
   }
 }

@@ -17,12 +17,4 @@ class MouseEvent {
     
     return true;
   }
-  
-  void on(Runnable func) {
-    func.run();
-  }
-  
-  void update() {
-    
-  }
 }

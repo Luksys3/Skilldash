@@ -7,7 +7,6 @@ class LocalPlayer extends Player {
   private int disableTime;
 
   // Movement
-  //private PVector prevPos = new PVector(0, 0);
   private PVector vel = new PVector(0, 0);
 
   LocalPlayer(int x, int y) {
@@ -123,40 +122,4 @@ class LocalPlayer extends Player {
     
     network.emit("bullet", json);
   }
-
-  //void keyPressed() {
-  //  //updateButtons(key, true);
-    
-  //  if (
-  //    keyUpG == true
-  //    &&
-  //    key == 'g'
-  //  ) {
-  //    keyUpG = false;
-  //    //shoot();
-  //  }
-  //}
-
-  //void keyReleased() {
-  //  //updateButtons(key, false);
-    
-  //  if (key == 'g') {
-  //    keyUpG = true;
-  //  }
-  //}
-
-  //boolean updateButtons(char k, boolean pressed) {
-  //  switch (k) {
-  //  case 'w':
-  //    return up = pressed;
-  //  case 's':
-  //    return down = pressed;
-  //  case 'd':
-  //    return right = pressed;
-  //  case 'a':
-  //    return left = pressed;
-  //  default:
-  //    return pressed;
-  //  }
-  //}
 }

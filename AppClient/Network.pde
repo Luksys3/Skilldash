@@ -10,7 +10,7 @@ class Network {
 
   void update() {
     if (!client.active()) {
-      // print("DISCONNECTED\n");
+      // Disconnected
       return;
     }
 

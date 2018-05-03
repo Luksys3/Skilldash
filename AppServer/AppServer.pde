@@ -31,7 +31,6 @@ void draw() {
   }
 
 
-
   // Get next available client
   Client client = server.available();
 
@@ -55,26 +54,21 @@ void draw() {
     }
   }
 
-  //int cMillis = millis();
-  //if (cMillis - lastSent >= interval) {
-  //lastSent = cMillis;
-
   String dataToSend = "";
   for (Map.Entry pair : players.entrySet()) {
     dataToSend += pair.getValue();
   }
 
-  if (dataToSend != "") {
+  if (dataToSend != "")
     server.write(dataToSend);
-    //println(millis() +" - Data sent");
-  }
-  //}
 }
 
 void disconnectEvent(Client client) {
-  //String clientid = getClientid(client.ip());
-  //removePlayer(clientid);
+  String clientid = getClientid(client.ip());
+  println("Player disconnected: "+ clientid);
+  removePlayer(clientid);
 
+  // TODO: Send to clients that this client disconnected
   //server.write("{\"clientid\": "+ clientid +", \"type\": \"disconnect\"}");
-  //print(millis() + " - Player disconnected: "+ client.ip());
+  //println(millis() + " - Player disconnected: "+ client.ip());
 }

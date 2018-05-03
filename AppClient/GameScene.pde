@@ -14,7 +14,6 @@ class GameScene extends Scene {
   }
 
   void update() {
-    //println("GameScene");
     localPlayer.update();
     network.update();
 
