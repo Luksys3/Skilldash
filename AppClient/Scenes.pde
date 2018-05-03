@@ -1,13 +1,17 @@
 class Scenes {
   private String defaultScene = "title";
   private String scene = defaultScene;
+  
+  private StringList sceneList = new StringList();
   private HashMap<String, Scene> scenes = new HashMap<String, Scene>();
   
   Scenes() {
     // Add scenes
     scenes.put("title", new TitleScene());
-    scenes.put("game", new GameScene());
-    scenes.put("exit", new ExitScene());
+    scenes.put("game",  new GameScene());
+    scenes.put("exit",  new ExitScene());
+    
+    updateSceneList();
   }
   
   boolean is(String name) {
@@ -44,5 +48,15 @@ class Scenes {
       return null;
       
     return scenes.get(name);
+  }
+  
+  StringList getSceneList() {
+    return sceneList;
+  }
+  
+  void updateSceneList() {
+    for (Map.Entry pair : scenes.entrySet()) {
+      sceneList.append((String)pair.getKey());
+    }
   }
 }
