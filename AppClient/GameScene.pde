@@ -1,12 +1,12 @@
 class GameScene extends Scene {
     
   void mount() {
-    println("Game scene mounted");
+    //println("Game scene mounted");
     players = new HashMap<String, Player>();
 
     localPlayer = new LocalPlayer(width / 2, height / 2);
 
-    client = new Client(appClient, "localhost", 5204);
+    client = new Client(appClient, IPADDRESS, int(PORT));
     network = new Network(client);
   
     terrain = new Terrain();

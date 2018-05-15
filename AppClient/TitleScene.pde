@@ -4,12 +4,8 @@ class TitleScene extends Scene {
   void update() {
     //println("TitleScene");
     menuItemYPos = 170;
-    createMenuItem("Join game", "game");
+    createMenuItem("Join game", "join-game");
     createMenuItem("Quit", "exit");
-  }
-  
-  void unmount() {
-    println("Title scene unmounted");
   }
   
   void createMenuItem(String title, String scene) {

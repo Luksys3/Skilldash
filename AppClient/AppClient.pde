@@ -3,7 +3,14 @@ import java.util.Map;
 import java.util.Iterator;
 
 // Used for input fields
-//import controlP5.*;
+import controlP5.*;
+
+// Constants
+String IPADDRESS = "127.0.0.1";
+String PORT      = "5204";
+
+
+ControlP5 cp5;
 
 int requestInterval = 40;
 
@@ -28,6 +35,8 @@ AppClient appClient = this;
 
 void setup() {
   size(600, 560);
+  
+  cp5 = new ControlP5(this);
 }
 
 void draw() {

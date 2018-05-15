@@ -1,17 +1,21 @@
 class Scenes {
   private String defaultScene = "title";
-  private String scene = defaultScene;
+  private String scene;
   
   private StringList sceneList = new StringList();
-  private HashMap<String, Scene> scenes = new HashMap<String, Scene>();
+  private HashMap<String, Scene> scenesArray = new HashMap<String, Scene>();
   
   Scenes() {
     // Add scenes
-    scenes.put("title", new TitleScene());
-    scenes.put("game",  new GameScene());
-    scenes.put("exit",  new ExitScene());
+    scenesArray.put("title",     new TitleScene());
+    scenesArray.put("game",      new GameScene());
+    scenesArray.put("join-game", new JoinGameScene());
+    scenesArray.put("exit",      new ExitScene());
     
     updateSceneList();
+    
+    // Change to default scene
+    change(defaultScene);
   }
   
   boolean is(String name) {
@@ -19,9 +23,9 @@ class Scenes {
   }
   
   void update() {
-    if (scenes.containsKey(scene)) {
+    if (scenesArray.containsKey(scene)) {
       // Update current scene
-      scenes.get(scene).update();
+      scenesArray.get(scene).update();
     }
       
     textSize(12);
@@ -29,6 +33,8 @@ class Scenes {
   }
   
   void change(String name) {
+    println("Changing to scene: "+ name);
+    
     // Call old scene unmount method
     Scene oldScene = getScene(scene);
     if (oldScene != null)
@@ -36,18 +42,25 @@ class Scenes {
     
     // Call new scene mount method
     Scene newScene = getScene(name);
-    if (newScene != null)
+    if (newScene != null) {
+      if (!newScene.isInitDone()) {
+        newScene.init();
+        newScene.setInitDone();
+      }
+      
       newScene.mount();
+    }
     
     // Set scene
     scene = name;
   }
   
   Scene getScene(String name) {
-    if (!scenes.containsKey(name))
+    if (!scenesArray.containsKey(name))
       return null;
       
-    return scenes.get(name);
+    return scenesArray.get(name);
+    //return null;
   }
   
   StringList getSceneList() {
@@ -55,7 +68,7 @@ class Scenes {
   }
   
   void updateSceneList() {
-    for (Map.Entry pair : scenes.entrySet()) {
+    for (Map.Entry pair : scenesArray.entrySet()) {
       sceneList.append((String)pair.getKey());
     }
   }
