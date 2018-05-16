@@ -1,15 +1,9 @@
-class Bullet {
-  private float x;
-  private float y;
-  private float speed=20;
+class ProjectileBasic extends Projectile {
   private float mx;
   private float my;
-  private boolean dead = false;
   private float angle;
 
-  private String id = str(randomId());
-
-  Bullet(float x1, float y1, float px1, float py1) {
+  ProjectileBasic(float x1, float y1, float px1, float py1) {
     x = x1;
     y = y1;
     mx = px1;
@@ -42,9 +36,13 @@ class Bullet {
   }
 
   void draw() {
+    pushStyle();
+    
     fill(0);
     noStroke();
-    ellipse(x, y, 10, 10);
+    ellipse(x, y, 4, 4);
+    
+    popStyle();
   }
 
   void update() {
@@ -63,17 +61,5 @@ class Bullet {
     movement();
 
     draw();
-  }
-
-  void die() {
-    dead = true;
-  }
-
-  boolean isDead() {
-    return dead;
-  }
-
-  String getId() {
-    return id;
   }
 }

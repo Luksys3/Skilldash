@@ -1,12 +1,12 @@
-class ProjectileStar extends Projectile{
+class ProjectileStar extends Projectile {
   protected float x, y, mx, my;
   protected float speed = 5;
   
-  ProjectileStar(float px, float py, float mousex, float mousey){
-   x = px;
-   y = py;
-   mx = mousex;
-   my = mousey;
+  ProjectileStar(float px, float py, float mousex, float mousey) {
+    x = px;
+    y = py;
+    mx = mousex;
+    my = mousey;
   }
   
   void update(){

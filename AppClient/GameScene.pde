@@ -10,7 +10,7 @@ class GameScene extends Scene {
     network = new Network(client);
   
     terrain = new Terrain();
-    projectileManager = new ProjectileManager();
+    projectiles = new Projectiles();
   }
 
   void update() {
@@ -18,11 +18,11 @@ class GameScene extends Scene {
     network.update();
 
     // Updates all projectiles
-    projectileManager.update();
+    projectiles.update();
 
+    // Update players
     for (Map.Entry pair : players.entrySet()) {
-      Player player = players.get(pair.getKey());
-      player.update();
+      players.get(pair.getKey()).update();
     }
   }
   

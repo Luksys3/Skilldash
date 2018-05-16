@@ -49,7 +49,7 @@ class Network {
         updatePlayerPosition(json);
         break;
       case "bullet":
-        projectileManager.create(json);
+        projectiles.create(json);
         break;
       case "disconnect":
         players.remove( str(json.getInt("clientid")) );

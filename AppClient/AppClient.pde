@@ -24,7 +24,7 @@ Scenes scenes = new Scenes();
 Network network;
 Client client;
 Terrain terrain;
-ProjectileManager projectileManager;
+Projectiles projectiles;
 
 MouseEvent mouseEvent = new MouseEvent();
 

@@ -28,8 +28,11 @@ class LocalPlayer extends Player {
     movement();
     rotation();
     
-    if (Key.isPressed('g'))
-      shoot();
+    if (Key.isPressed('.'))
+      shoot("basic");
+    
+    if (Key.isPressed('/'))
+      shoot("star");
     
     draw();
   }
@@ -108,17 +111,15 @@ class LocalPlayer extends Player {
     network.emit("position", json);
   }
   
-  void shoot() {
-    float mx = mouseX,
-          my = mouseY;
-    
+  void shoot(String type) {
     JSONObject json;
     json = new JSONObject();
     
     json.setFloat("x1", pos.x);
     json.setFloat("y1", pos.y);
-    json.setFloat("x2", mx);
-    json.setFloat("y2", my);
+    json.setFloat("x2", mouseX);
+    json.setFloat("y2", mouseY);
+    json.setString("pr_type", type);
     
     network.emit("bullet", json);
   }
