@@ -106,6 +106,7 @@ class LocalPlayer extends Player {
     json.setInt("clientid", clientid);
     json.setInt("x", int(pos.x));
     json.setInt("y", int(pos.y));
+    json.setInt("health", health);
     json.setInt("angle", int(degrees(angle)));
 
     network.emit("position", json);

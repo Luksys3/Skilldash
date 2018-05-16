@@ -3,10 +3,11 @@ class Player {
 
   protected int w = 20;
   protected int h = 20;
+  protected int maxHealth = 100;
 
   // Base stats
   protected int speed = 10;
-  protected int health;
+  protected int health = maxHealth;
   protected int rageBar;
   
   // Movement animation variables
@@ -31,6 +32,8 @@ class Player {
   }
 
   void draw() {
+    pushStyle();
+    
     fill(55);
     strokeWeight(0);
     stroke(0);
@@ -47,6 +50,12 @@ class Player {
 
     //rect(-w/2, -h, w, h*2);
     popMatrix();
+    
+    // Health bar
+    if (health < maxHealth)
+      drawHealthBar();
+    
+    popStyle();
   }
   
   int getX() {
@@ -55,6 +64,14 @@ class Player {
 
   int getY() {
     return int(pos.y);
+  }
+  
+  int getWidth() {
+    return w;
+  }
+
+  int getHeight() {
+    return h;
   }
 
   int getClientId() {
@@ -84,14 +101,36 @@ class Player {
   void setAngle(float rad) {
     angle = rad;
   }
+  
+  void setHealth(int newHealth) {
+    health = newHealth;
+  }
 
   void takeDamage(int damage) {
     health -= damage;
 
     if (health <= 0) {
       health = 0;
-      //dickedOn();
+      // TODO: die
     }
+  }
+  
+  protected void drawHealthBar() {
+    int w = 20;
+    int h = 4;
+    
+    int x = getX() - 10;
+    int y = getY() - h - 20;
+    
+    int healthWidth = round(map(health, 0, maxHealth, 0, w));
+    
+    // Background
+    fill(255, 0, 0);
+    rect(x, y, w, h);
+    
+    // Top layer
+    fill(0, 255, 0);
+    rect(x, y, healthWidth, h);
   }
   
   private void moveTo(int nx, int ny) {

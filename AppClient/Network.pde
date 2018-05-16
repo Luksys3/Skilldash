@@ -87,6 +87,7 @@ class Network {
       player.moveTo(px, py);
     }
 
+    player.setHealth(json.getInt("health"));
     player.setAngle(json.getFloat("angle"));
   }
 
