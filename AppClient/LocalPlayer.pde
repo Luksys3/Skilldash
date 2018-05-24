@@ -14,25 +14,32 @@ class LocalPlayer extends Player {
   }
 
   void update() {
+    if (health <= 0)
+      die();
+    
+    if (!isDead()) {
+      // Check collision with bullets
+      checkCollisions();
+    }
+    
     if (
       isDisabled()
       &&
       millis() >= disableTime
+      &&
+      disableTime != 0
     ) unDisable();
 
-    if (isDisabled()) {
-      draw();
-      return;
+    if (!isDisabled()) {
+      movement();
+      rotation();
+      
+      if (Key.isPressed('.'))
+        shoot("basic");
+      
+      if (Key.isPressed('/'))
+        shoot("star");
     }
-    
-    movement();
-    rotation();
-    
-    if (Key.isPressed('.'))
-      shoot("basic");
-    
-    if (Key.isPressed('/'))
-      shoot("star");
     
     draw();
   }
@@ -67,7 +74,11 @@ class LocalPlayer extends Player {
 
   void disable(int time) {
     disabled = true;
-    disableTime = millis() + time;
+    
+    if (time == 0)
+      disableTime = 0;
+    else
+      disableTime = millis() + time;
   }
   
   void unDisable() {
@@ -113,9 +124,9 @@ class LocalPlayer extends Player {
   }
   
   void shoot(String type) {
-    JSONObject json;
-    json = new JSONObject();
+    JSONObject json = new JSONObject();
     
+    json.setFloat("owner", getClientId());
     json.setFloat("x1", pos.x);
     json.setFloat("y1", pos.y);
     json.setFloat("x2", mouseX);
@@ -123,5 +134,38 @@ class LocalPlayer extends Player {
     json.setString("pr_type", type);
     
     network.emit("bullet", json);
+  }
+  
+  void checkCollisions() {
+    HashMap<String, Projectile> collidedProjectiles = projectiles.collided(
+      getClientId(),
+      "player",
+      getX(),
+      getY(),
+      hitBoxRange
+    );
+    
+    Iterator<Map.Entry<String, Projectile>> it = collidedProjectiles.entrySet().iterator();
+    while (it.hasNext())
+    {
+      Map.Entry<String, Projectile> item = it.next();
+      
+      Projectile pr = item.getValue();
+      
+      // Take damage from projectile
+      takeDamage(pr.getDamage());
+    }
+  }
+  
+  void takeDamage(int damage) {
+    health -= damage;
+    
+    if (health < 0)
+      health = 0;
+  }
+  
+  void die() {
+    dead = true;
+    disable(0);
   }
 }

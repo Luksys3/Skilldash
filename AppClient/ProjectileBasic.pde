@@ -2,6 +2,8 @@ class ProjectileBasic extends Projectile {
   private float mx;
   private float my;
   private float angle;
+  
+  private int speed = 5;
 
   ProjectileBasic(float x1, float y1, float px1, float py1) {
     x = x1;
@@ -41,6 +43,9 @@ class ProjectileBasic extends Projectile {
     fill(0);
     noStroke();
     ellipse(x, y, 4, 4);
+    
+    //fill(255, 0, 0);
+    //rect(getX(), getY(), 1, 1);
     
     popStyle();
   }

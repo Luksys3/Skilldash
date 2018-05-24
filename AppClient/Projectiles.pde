@@ -17,7 +17,7 @@ class Projectiles {
       bl.update();
     }
   }
-
+  
   void create(JSONObject json) {
     String type = json.getString("pr_type");
     Projectile proj = null;
@@ -44,6 +44,35 @@ class Projectiles {
     if (proj == null)
       return;
     
+    if (!json.isNull("owner"))
+      proj.setOwner(json.getInt("owner"));
+    
     activeProjectiles.put(proj.getId(), proj);
+  }
+  
+  HashMap<String, Projectile> collided(int objectId, String name, float x, float y, int distance) {
+    HashMap<String, Projectile> collidedProjectiles = new HashMap<String, Projectile>();
+    
+    Iterator<Map.Entry<String, Projectile>> it = activeProjectiles.entrySet().iterator();
+    while (it.hasNext())
+    {
+      Map.Entry<String, Projectile> item = it.next();
+
+      Projectile bl = item.getValue();
+      
+      if (bl.getOwner() == objectId)
+        continue;
+      
+      if (dist(x, y, bl.getX(), bl.getY()) > distance)
+        continue;
+      
+      // Call projectile method onCollision();
+      bl.onCollision(name);
+      
+      // Add projectile to collided list
+      collidedProjectiles.put(item.getKey(), bl);
+    }
+    
+    return collidedProjectiles;
   }
 }

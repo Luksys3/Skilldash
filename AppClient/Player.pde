@@ -4,6 +4,8 @@ class Player {
   protected int w = 20;
   protected int h = 20;
   protected int maxHealth = 100;
+  
+  protected int hitBoxRange = 30;
 
   // Base stats
   protected int speed = 10;
@@ -15,6 +17,7 @@ class Player {
   private PVector moveToCoords;
 
   protected float angle = 0;
+  protected boolean dead = false;
 
   protected PVector pos;
 
@@ -35,6 +38,10 @@ class Player {
     pushStyle();
     
     fill(55);
+    
+    if (isDead())
+      fill(255, 0, 0);
+    
     strokeWeight(0);
     stroke(0);
 
@@ -54,6 +61,9 @@ class Player {
     // Health bar
     if (health < maxHealth)
       drawHealthBar();
+    
+    // Draw hit box
+    drawHitBox();
     
     popStyle();
   }
@@ -82,6 +92,14 @@ class Player {
     return angle;
   }
   
+  int getHealth() {
+    return health;
+  }
+  
+  boolean isDead() {
+    return dead;
+  }
+  
   void setClientid(int lClientid) {
     clientid = lClientid;
   }
@@ -105,15 +123,6 @@ class Player {
   void setHealth(int newHealth) {
     health = newHealth;
   }
-
-  void takeDamage(int damage) {
-    health -= damage;
-
-    if (health <= 0) {
-      health = 0;
-      // TODO: die
-    }
-  }
   
   protected void drawHealthBar() {
     int w = 20;
@@ -131,6 +140,12 @@ class Player {
     // Top layer
     fill(0, 255, 0);
     rect(x, y, healthWidth, h);
+  }
+  
+  protected void drawHitBox() {
+    strokeWeight(0);
+    fill(255, 0, 0, 50);
+    ellipse(getX(), getY(), hitBoxRange, hitBoxRange);
   }
   
   private void moveTo(int nx, int ny) {

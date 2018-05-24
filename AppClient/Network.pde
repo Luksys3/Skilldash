@@ -66,6 +66,7 @@ class Network {
     json.setInt("x", localPlayer.getX());
     json.setInt("y", localPlayer.getY());
     json.setFloat("angle", localPlayer.getAngle());
+    json.setInt("health", localPlayer.getHealth());
 
     network.emit("position", json);
   }
